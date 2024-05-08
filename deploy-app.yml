@@ -1,0 +1,41 @@
+# Create a GitHub action to email a report from a file at 6 a.m. daily
+name: Email Report
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+
+jobs:
+  email_report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Email report
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: python email_report.py
+ 
+ The workflow file is named  deploy-app.yml  and is located in the  .github/workflows  directory. The workflow is triggered by a schedule event at 6 a.m. daily. The job runs on an Ubuntu runner and has three steps: 
+ 
+ Set up Python 
+ Install dependencies 
+ Email report 
+ 
+ The Email report step uses environment variables to access SMTP server details and email account credentials. The Python script  email_report.py  sends a report from a file to the specified email address. 
+ The SMTP server details and email account credentials are stored as secrets in the GitHub repository. 
+ Conclusion 
+ This article discussed how to send an email using Python. We covered the Python smtplib library, which provides an SMTP client for sending emails. We also discussed how to send an email with an attachment, HTML content, and multiple recipients. 
+ To send emails with Python, you need to have access to an SMTP server. You can use a public SMTP server or set up your own SMTP server. 
+ We also discussed how to send an email using the GitHub Actions workflow. We created a GitHub Actions workflow that sends an email with a report from a file at 6 a.m. daily. 
+ To learn more about sending emails with Python, check out the  smtplib documentation. 
+ Full visibility into production Python applications We build this monitoring tool for developers and dev ops to provide a real-time performance monitoring solution that works. It's a tool that's built by developers for developers. 
+ This book can help your team get started with web performance monitoring. It covers a wide range of topics including real user monitoring and  synthetic monitoring. Understand how to effectively monitor performance from DevOps, development, and business perspectives.
